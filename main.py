@@ -502,12 +502,12 @@ def options():
 
         SCREEN.fill("white")
 
-        OPTIONS_TEXT = get_font(45).render("This is the OPTIONS screen.", True, "Black")
-        OPTIONS_RECT = OPTIONS_TEXT.get_rect(center=(0, 0))
+        OPTIONS_TEXT = pygame.image.load('Coding.png')
+        OPTIONS_RECT = OPTIONS_TEXT.get_rect(center=(300, 300))
         SCREEN.blit(OPTIONS_TEXT, OPTIONS_RECT)
 
-        OPTIONS_BACK = Button(image=None, pos=(640, 460), 
-                            text_input="BACK", font=get_font(75), base_color="Black", hovering_color="Green")
+        OPTIONS_BACK = Button(image=None, pos=(400, 487), 
+        text_input="BACK", font=get_font(30), base_color="Black", hovering_color="Green")
 
         OPTIONS_BACK.changeColor(OPTIONS_MOUSE_POS)
         OPTIONS_BACK.update(SCREEN)
@@ -528,47 +528,52 @@ def options():
 
 pygame.init()
 
-SCREEN = pygame.display.set_mode((400, 400))
+SCREEN = pygame.display.set_mode((600, 600))
 pygame.display.set_caption("Menu")
 
-BG = pygame.image.load("Background2.png")
+BG = pygame.image.load("Background2.jpg")
 
 def get_font(size): # Returns Press-Start-2P in the desired size
-    return pygame.font.Font("font (4).ttf", size)  
-  
+    return pygame.font.Font("font (4).ttf", size)
   
                                      
 def main_menu():
     while True:
-        SCREEN.blit(BG, (0, 0)) # blits a black screen 
+        SCREEN.blit(BG, (0, 0))
 
-        MENU_MOUSE_POS = pygame.mouse.get_pos() #Returns the x and y position of the mouse cursor. ... The position is relative to the top-left corner of the display. ... but is always constrained to the screen.
+        MENU_MOUSE_POS = pygame.mouse.get_pos()
 
-        MENU_TEXT = get_font(33).render("FLAPPY BIRD", True, "#C5E384")
-        MENU_RECT = MENU_TEXT.get_rect(center=(200, 100))
+        MENU_TEXT = get_font(60).render("MAIN MENU", True, "#b68f40")
+        MENU_RECT = MENU_TEXT.get_rect(center=(310, 100))
 
-        PLAY_BUTTON = Button(image=pygame.image.load("Rect.png"), pos=(200, 200), text_input="PLAY", font=get_font(23), base_color="#d7fcd4", hovering_color="Green") # creating buttons
-        
-        QUIT_BUTTON = Button(image=pygame.image.load("Rect.png"), pos=(200, 330), text_input="QUIT", font=get_font(23), base_color="#d7fcd4", hovering_color="Red")
+        PLAY_BUTTON = Button(image=pygame.image.load("Rect.png"), pos=(300, 230), 
+                            text_input="PLAY", font=get_font(23), base_color="#d7fcd4", hovering_color="Green")
+        OPTIONS_BUTTON = Button(image=pygame.image.load("Rect.png"), pos=(300, 360), 
+                            text_input="INSTRUCTIONS", font=get_font(23), base_color="#d7fcd4", hovering_color="Blue")
+        QUIT_BUTTON = Button(image=pygame.image.load("Rect.png"), pos=(300, 500), 
+                            text_input="QUIT", font=get_font(23), base_color="#d7fcd4", hovering_color="Red")
 
         SCREEN.blit(MENU_TEXT, MENU_RECT)
 
-        for button in [PLAY_BUTTON, QUIT_BUTTON]:
-            button.changeColor(MENU_MOUSE_POS) # if mouse hovers over options changes colors 
+        for button in [PLAY_BUTTON, OPTIONS_BUTTON, QUIT_BUTTON]:
+            button.changeColor(MENU_MOUSE_POS)
             button.update(SCREEN)
         
-        for event in pygame.event.get(): # quits the game 
+        for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-            if event.type == pygame.MOUSEBUTTONDOWN: #clicks play/begins game 
+            if event.type == pygame.MOUSEBUTTONDOWN:
                 if PLAY_BUTTON.checkForInput(MENU_MOUSE_POS):
-                    play() # plays game
-
+                    play()
+                if OPTIONS_BUTTON.checkForInput(MENU_MOUSE_POS):
+                    options()
                 if QUIT_BUTTON.checkForInput(MENU_MOUSE_POS):
-                    pygame.quit() # exists
+                    pygame.quit()
                     sys.exit()
 
-        pygame.display.update() # continusley updates screen or resets screen when arguement is made
+        pygame.display.update()
 
 main_menu()
+
+
