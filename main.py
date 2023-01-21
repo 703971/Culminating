@@ -7,8 +7,9 @@ from button import Button
 
 # main menu creation: https://www.youtube.com/watch?v=GMBqjxcKogA
 # main menu: https://github.com/baraltech/Menu-System-PyGame/blob/main/main.py
-
-
+# https://www.youtube.com/watch?v=z26fTadq_jI --> coins
+# https://youtu.be/rO_UU_Uu8EQ 
+# https://www.youtube.com/watch?v=69KRrxcn77s
 
 
 def play():
@@ -382,11 +383,31 @@ def play():
   
           
   
-  
+          BACK_MENU_MOUSE_POS = pygame.mouse.get_pos() 
           playerSurface = pygame.transform.rotate(IMAGES['player'][1], playerRot)
+          RESTART_TEXT = get_font(9).render("Press Space Bar to Restart Game", True, "Black")
+          RESTART_RECT = RESTART_TEXT.get_rect(center=(144, 256))
           SCREEN.blit(playerSurface, (playerx,playery))
           SCREEN.blit(IMAGES['gameover'], (50, 180))
-  
+          
+          SCREEN.blit(RESTART_TEXT, RESTART_RECT)
+          BACK_MENU = Button(image=None, pos=(145, 295), 
+        text_input="MENU", font=get_font(30), base_color="Orange", hovering_color="White")
+
+          BACK_MENU.changeColor(BACK_MENU_MOUSE_POS)
+          BACK_MENU.update(SCREEN)
+
+          for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if BACK_MENU.checkForInput(BACK_MENU_MOUSE_POS):
+                    main_menu()
+
+        
+
+        
           FPSCLOCK.tick(FPS)
           pygame.display.update()
   
@@ -498,26 +519,28 @@ def play():
 
 def options():
     while True:
-        OPTIONS_MOUSE_POS = pygame.mouse.get_pos()
+        SCREEN = pygame.display.set_mode((288, 512)) 
+        pygame.display.set_caption("Instruction Page")
+        INSTRUCTION_MOUSE_POS = pygame.mouse.get_pos()
 
         SCREEN.fill("white")
 
-        OPTIONS_TEXT = pygame.image.load('Coding.png')
-        OPTIONS_RECT = OPTIONS_TEXT.get_rect(center=(300, 300))
-        SCREEN.blit(OPTIONS_TEXT, OPTIONS_RECT)
+        INSTRUCTION_TEXT = pygame.image.load('instructions.png')
+        INSTRUCTION_RECT = INSTRUCTION_TEXT.get_rect(center=(144, 256))
+        SCREEN.blit(INSTRUCTION_TEXT, INSTRUCTION_RECT)
 
-        OPTIONS_BACK = Button(image=None, pos=(400, 487), 
+        INSTRUCTION_BACK = Button(image=None, pos=(144, 456), 
         text_input="BACK", font=get_font(30), base_color="Black", hovering_color="Green")
 
-        OPTIONS_BACK.changeColor(OPTIONS_MOUSE_POS)
-        OPTIONS_BACK.update(SCREEN)
+        INSTRUCTION_BACK.changeColor(INSTRUCTION_MOUSE_POS)
+        INSTRUCTION_BACK.update(SCREEN)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
-                if OPTIONS_BACK.checkForInput(OPTIONS_MOUSE_POS):
+                if INSTRUCTION_BACK.checkForInput(INSTRUCTION_MOUSE_POS):
                     main_menu()
 
         pygame.display.update()
@@ -528,10 +551,10 @@ def options():
 
 pygame.init()
 
-SCREEN = pygame.display.set_mode((600, 600))
+SCREEN = pygame.display.set_mode((288, 512))
 pygame.display.set_caption("Menu")
 
-BG = pygame.image.load("Background2.jpg")
+BG = pygame.image.load("mainmenu.png")
 
 def get_font(size): # Returns Press-Start-2P in the desired size
     return pygame.font.Font("font (4).ttf", size)
@@ -543,17 +566,13 @@ def main_menu():
 
         MENU_MOUSE_POS = pygame.mouse.get_pos()
 
-        MENU_TEXT = get_font(60).render("MAIN MENU", True, "#b68f40")
-        MENU_RECT = MENU_TEXT.get_rect(center=(310, 100))
-
-        PLAY_BUTTON = Button(image=pygame.image.load("Rect.png"), pos=(300, 230), 
+        PLAY_BUTTON = Button(image=None, pos=(155, 160), 
                             text_input="PLAY", font=get_font(23), base_color="#d7fcd4", hovering_color="Green")
-        OPTIONS_BUTTON = Button(image=pygame.image.load("Rect.png"), pos=(300, 360), 
-                            text_input="INSTRUCTIONS", font=get_font(23), base_color="#d7fcd4", hovering_color="Blue")
-        QUIT_BUTTON = Button(image=pygame.image.load("Rect.png"), pos=(300, 500), 
+        OPTIONS_BUTTON = Button(image=None, pos=(155, 265), 
+                            text_input="INSTRUCTIONS", font=get_font(15), base_color="#d7fcd4", hovering_color="Blue")
+        QUIT_BUTTON = Button(image=None, pos=(155, 375), 
                             text_input="QUIT", font=get_font(23), base_color="#d7fcd4", hovering_color="Red")
 
-        SCREEN.blit(MENU_TEXT, MENU_RECT)
 
         for button in [PLAY_BUTTON, OPTIONS_BUTTON, QUIT_BUTTON]:
             button.changeColor(MENU_MOUSE_POS)
