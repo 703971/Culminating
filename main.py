@@ -193,6 +193,9 @@ def play():
           pygame.display.update()
           FPSCLOCK.tick(FPS)
   
+  def highest_score():
+    with open("highest score.txt","r") as f:
+      return f.read()
   
   def mainGame(movementInfo):
       score = playerIndex = loopIter = 0
@@ -230,7 +233,15 @@ def play():
       playerRotThr  =  20   # rotation threshold
       playerFlapAcc =  -9   # players speed on flapping
       playerFlapped = False # True when player flaps
-  
+
+      try:
+        highestscore = int(highest_score())
+      except:
+        highestscore = 0
+      def showhighestscore():
+        HIGHEST_SCORE_TEXT = get_font(14).render(f"Highest Score: {highestscore}", True, "White")
+        HIGHEST_SCORE_RECT = HIGHEST_SCORE_TEXT.get_rect(center=(150, 20))
+        SCREEN.blit(HIGHEST_SCORE_TEXT, HIGHEST_SCORE_RECT)
   
       while True:
           for event in pygame.event.get():
@@ -267,6 +278,11 @@ def play():
               if pipeMidPos <= playerMidPos < pipeMidPos + 4:
                   score += 1
                   SOUNDS['point'].play()
+              if (highestscore < score):
+                highestscore = score
+              with open("highest score.txt","w") as f:
+                f.write(str(highestscore))
+              
   
           # playerIndex basex change
           if (loopIter + 1) % 3 == 0:
@@ -316,7 +332,9 @@ def play():
           SCREEN.blit(IMAGES['base'], (basex, BASEY))
           # print score so player overlaps the score
           showScore(score)
-  
+          showhighestscore()
+
+        
           # Player rotation has a threshold
           visibleRot = playerRotThr
           if playerRot <= playerRotThr:
@@ -380,9 +398,6 @@ def play():
   
           SCREEN.blit(IMAGES['base'], (basex, BASEY))
           showScore(score)
-  
-          
-  
           BACK_MENU_MOUSE_POS = pygame.mouse.get_pos() 
           playerSurface = pygame.transform.rotate(IMAGES['player'][1], playerRot)
           RESTART_TEXT = get_font(9).render("Press Space Bar to Restart Game", True, "Black")
@@ -403,7 +418,7 @@ def play():
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if BACK_MENU.checkForInput(BACK_MENU_MOUSE_POS):
-                    main_menu()
+                  main_menu()
 
         
 
@@ -517,7 +532,7 @@ def play():
   
   
 
-def options():
+def instruction():
     while True:
         SCREEN = pygame.display.set_mode((288, 512)) 
         pygame.display.set_caption("Instruction Page")
@@ -568,13 +583,13 @@ def main_menu():
 
         PLAY_BUTTON = Button(image=None, pos=(155, 160), 
                             text_input="PLAY", font=get_font(23), base_color="#d7fcd4", hovering_color="Green")
-        OPTIONS_BUTTON = Button(image=None, pos=(155, 265), 
+        INSTRUCTION_BUTTON = Button(image=None, pos=(155, 265), 
                             text_input="INSTRUCTIONS", font=get_font(15), base_color="#d7fcd4", hovering_color="Blue")
         QUIT_BUTTON = Button(image=None, pos=(155, 375), 
                             text_input="QUIT", font=get_font(23), base_color="#d7fcd4", hovering_color="Red")
 
 
-        for button in [PLAY_BUTTON, OPTIONS_BUTTON, QUIT_BUTTON]:
+        for button in [PLAY_BUTTON, INSTRUCTION_BUTTON, QUIT_BUTTON]:
             button.changeColor(MENU_MOUSE_POS)
             button.update(SCREEN)
         
@@ -585,8 +600,8 @@ def main_menu():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if PLAY_BUTTON.checkForInput(MENU_MOUSE_POS):
                     play()
-                if OPTIONS_BUTTON.checkForInput(MENU_MOUSE_POS):
-                    options()
+                if INSTRUCTION_BUTTON.checkForInput(MENU_MOUSE_POS):
+                    instruction()
                 if QUIT_BUTTON.checkForInput(MENU_MOUSE_POS):
                     pygame.quit()
                     sys.exit()
@@ -594,5 +609,3 @@ def main_menu():
         pygame.display.update()
 
 main_menu()
-
-
