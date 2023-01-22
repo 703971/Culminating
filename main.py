@@ -1,3 +1,9 @@
+#Saheli Saha
+#Decemeber 6th 2022
+#Flappy Bird
+#A program that allows users to play flappy bird with added sounds, highscore, restart. It also randomizes in bird colors and in backgrounds/pipes The user is able to find instructions using the instruction button on the main menu. The quit button can be used to quit the entire program and obviously, the play button is used to play flappy bird. 
+
+
 import pygame
 from pygame.locals import *
 from itertools import cycle
@@ -11,7 +17,7 @@ from button import Button
 # https://youtu.be/rO_UU_Uu8EQ 
 # https://www.youtube.com/watch?v=69KRrxcn77s
 
-# click play button on main menu and flappy bird is displayed and ready to play. Runs full code of flappy bird with included restart, highscore and going back to main menu
+# click play button on main menu and flappy bird is displayed and ready to play. Runs full code of flappy bird with included restart, highscore and going back to main menu as well as sounds and randomized birds and backgrounds.
 def play():
   FPS = 30
   screenWidth  = 288
@@ -199,7 +205,7 @@ def play():
     with open("highest score.txt","r") as f:
       return f.read()
   
-  # Using the movement of the bird (the x and y coordinates) from the welcome animation, the function begins to spawn the next two pipes after it goes through a pipe and randomizes the heights between the upper pipes and lower pipes (however the height between pipes stays the same). It also tracks the score as it passes through a particular area of the pipes and if the score passes high score, it updates the high score to current score, displaying the high score during play. It checks for collsions with the coordinates of the bird and checks to see if bird hit ground or pipe. It collision occurs the bird goes towards the ground, indicating the game over over. Other wise during play, the bird continues to jump at an angle of 45 degrees with a certain velocity and goes down with gravity and ang ange of 45 degrees downwards until it hits ground where it fullly changes it rotation to 90 degrees. 
+  # Using the movement of the bird (the x and y coordinates) from the welcome animation, the function begins to spawn the next two pipes after it goes through a pipe and randomizes the colors and heights between the upper pipes and lower pipes (however the height between pipes stays the same). It also tracks the score as it passes through a particular area of the pipes and if the score passes high score, it updates the high score to current score, displaying the high score during play. It checks for collsions with the coordinates of the bird and checks to see if bird hit ground or pipe. It collision occurs the bird goes towards the ground, indicating the game over over. Other wise during play, the bird continues to jump at an angle of 45 degrees with a certain velocity and goes down with gravity and ang ange of 45 degrees downwards until it hits ground where it fullly changes it rotation to 90 degrees. 
   def mainGame(movementInfo):
       score = playerIndex = loopIter = 0
       playerIndexGen = movementInfo['playerIndexGen']
