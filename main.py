@@ -603,9 +603,9 @@ def mainMenu():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if playButton.checkForInput(menuMousePos):
                     play()
-                if INSTRUCTION_BUTTON.checkForInput(menuMousePos):
+                if instructionButton.checkForInput(menuMousePos):
                     instruction()
-                if QUIT_BUTTON.checkForInput(menuMousePos):
+                if quitButton.checkForInput(menuMousePos):
                     pygame.quit()
                     sys.exit()
 

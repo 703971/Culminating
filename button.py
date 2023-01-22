@@ -1,11 +1,11 @@
 class Button():
-	def __init__(self, image, pos, text_input, font, base_color, hovering_color):
+	def __init__(self, image, pos, textInput, font, baseColor, hoveringColor):
 		self.image = image
 		self.x_pos = pos[0]
 		self.y_pos = pos[1]
 		self.font = font
-		self.base_color, self.hovering_color = base_color, hovering_color
-		self.text_input = text_input #stores the text in function
+		self.base_color, self.hovering_color = baseColor, hoveringColor
+		self.text_input = textInput #stores the text in function
 		self.text = self.font.render(self.text_input, True, self.base_color) #uses text_input to create text in gui
 		if self.image is None:
 			self.image = self.text
